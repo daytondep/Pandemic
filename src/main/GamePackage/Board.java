@@ -1,9 +1,11 @@
 package GamePackage;
-import java.io.*;
-
-import java.util.ArrayList;
 
 import GamePackage.*;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Board {
 
@@ -13,7 +15,7 @@ public class Board {
     private int epidemic = 0;
     private int[] infectionRate = {2, 2, 2, 3, 3, 4, 4};
     private int[] cures = {0,0,0,0};
-    private Deck infection ;
+    private Deck infection;
     private Deck playerDeck;
     //private WorldMap gameMap;
 
@@ -23,6 +25,7 @@ public class Board {
         for (String city:citylist){
             System.out.println(city);
         }
+
     }
 
     private void populateCityList() {
