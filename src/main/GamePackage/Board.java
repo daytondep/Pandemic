@@ -1,10 +1,9 @@
-package GameFiles;
+package GamePackage;
 import java.io.*;
 
 import java.util.ArrayList;
 
-import GameFiles.Deck;
-import GameFiles.*;
+import GamePackage.*;
 
 public class Board {
 
@@ -16,7 +15,7 @@ public class Board {
     private int[] cures = {0,0,0,0};
     private Deck infection ;
     private Deck playerDeck;
-    private WorldMap gameMap;
+    //private WorldMap gameMap;
 
 
     public Board(){
@@ -51,7 +50,7 @@ public class Board {
 
     public Colour colourAssign(int index){
         Colour cityColour = null;
-        switch (index%(citylist.length/4)) {
+        switch (index%(citylist.size()/4)) {
             case 1:
                 cityColour = Colour.BLUE;
                 break;

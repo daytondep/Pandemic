@@ -1,4 +1,4 @@
-package GameFiles;
+package GamePackage;
 
 public enum CardType {
     INFECTIONCARD,

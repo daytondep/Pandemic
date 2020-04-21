@@ -1,4 +1,4 @@
-package GameFiles;
+package GamePackage;
 
 public class Card {
     private final String cityName;
