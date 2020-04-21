@@ -1,26 +1,48 @@
 package GameFiles;
+import java.io.*;
+
+import java.util.ArrayList;
 
 import GameFiles.Deck;
+import GameFiles.*;
 
 public class Board {
 
-    private String[] cityList; //String list of city names //TODO: should be read in from file
+    private ArrayList<String> citylist = new ArrayList<String>();
     private int difficulty;
 
     private int epidemic = 0;
     private int[] infectionRate = {2, 2, 2, 3, 3, 4, 4};
     private int[] cures = {0,0,0,0};
-    private Deck infection;
+    private Deck infection ;
     private Deck playerDeck;
     private WorldMap gameMap;
 
 
     public Board(){
-
+        populateCityList();
+        for (String city:citylist){
+            System.out.println(city);
+        }
     }
 
-    public String[] getCityList(){
-        return this.cityList;
+    private void populateCityList() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("cityindex.txt"));
+
+            String line = br.readLine();
+            while (line != null) {
+                citylist.add(line);
+                line = br.readLine();
+            }
+            br.close();
+        }catch (IOException ex){
+            System.err.println(ex);
+        }
+    }
+
+    public ArrayList<String> getCityList(){
+        return this.citylist;
     }
 
     public int getDifficulty(){
@@ -29,7 +51,7 @@ public class Board {
 
     public Colour colourAssign(int index){
         Colour cityColour = null;
-        switch (index%(cityList.length/4)) {
+        switch (index%(citylist.length/4)) {
             case 1:
                 cityColour = Colour.BLUE;
                 break;
@@ -47,5 +69,10 @@ public class Board {
                 break;
         }
         return cityColour;
+    }
+
+    public static void main(String args[]){
+        Board newBoard = new Board();
+
     }
 }
