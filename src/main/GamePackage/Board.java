@@ -49,7 +49,7 @@ public class Board {
         try {
             BufferedReader br = new BufferedReader(new FileReader("StandardMap.txt"));
             int city = 0;
-            String[] broken_line = null;
+            String[] broken_line = null; //TODO: apparently redundant?
             String line = br.readLine();
             while (line != null) {
                 broken_line = line.split(" ");
@@ -90,13 +90,13 @@ public class Board {
                 cityColour = Colour.BLACK;
                 break;
             default:
-                //exception handling
+                //TODO: exception handling
                 break;
         }
         return cityColour;
     }
 
-    public static void main(String args[]){
+    public static void main(String[] args){
         Board newBoard = new Board();
     }
 }
