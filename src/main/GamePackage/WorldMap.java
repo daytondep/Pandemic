@@ -1,6 +1,7 @@
 package GamePackage;
 
 
+
 public class WorldMap {
 
     private Board game;
@@ -14,6 +15,8 @@ public class WorldMap {
         this.adjacency = Adjmap;
         this.nodeMap = makeMap();
     }
+
+
 
     public Node[] makeMap() {
         Node[] nodeList = new Node[cityList.length];

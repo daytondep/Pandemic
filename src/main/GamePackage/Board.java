@@ -3,8 +3,6 @@ import java.io.*;
 
 import java.util.ArrayList;
 
-import GamePackage.*;
-
 public class Board {
 
     private ArrayList<String> citylist = new ArrayList<String>();
@@ -40,6 +38,28 @@ public class Board {
         }
     }
 
+    private int[][] makeAdj(){
+        int[][] adj = new int[48][48];
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("StandardMap.txt"));
+            int city = 0;
+            String[] broken_line = null;
+            String line = br.readLine();
+            while (line != null) {
+                broken_line = line.split(" ");
+                for (int i=0;i<broken_line.length;i++){
+                    adj[city][i] = Integer.parseInt(broken_line[i]);
+                }
+                city++;
+                line = br.readLine();
+            }
+            br.close();
+        }catch (IOException ex){
+            System.err.println(ex);
+        }
+        return adj;
+    }
+
     public ArrayList<String> getCityList(){
         return this.citylist;
     }
@@ -72,6 +92,5 @@ public class Board {
 
     public static void main(String args[]){
         Board newBoard = new Board();
-
     }
 }
