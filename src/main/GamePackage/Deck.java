@@ -5,6 +5,7 @@ import java.util.Collections;
 
 public class Deck {
     private ArrayList<Card> deck = new ArrayList<>();
+    private ArrayList<Card> discard = new ArrayList<>();
     private ArrayList<String> cityList; //String list of city names //TODO:refactor into game object. remove here?
     private final CardType deckType;
 
@@ -33,4 +34,17 @@ public class Deck {
         return this.deckType;
     }
 
+    public void epidemicTrigger() {
+        if(this.deckType==CardType.INFECTIONCARD){
+            Card tripleInfect = this.deck.get(0);
+            //TODO: implement the abilty to show what card was drawn?
+            this.discard.add(tripleInfect);
+            Collections.shuffle(discard);
+            intensify();
+        }
+    }
+
+    private void intensify(){
+        this.deck.addAll(this.discard);
+    }
 }
