@@ -1,7 +1,5 @@
 package GamePackage;
 
-import GamePackage.*;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,15 +8,19 @@ import java.util.ArrayList;
 
 public class Board {
 
-    private ArrayList<String> citylist = new ArrayList<String>();
+    private ArrayList<String> citylist = new ArrayList<>();
     private int difficulty;
 
-    private int epidemic = 0;
-    private int[] infectionRate = {2, 2, 2, 3, 3, 4, 4};
+    private int numEpidemic = 0;
+    private int epidemicsToLose = 8;
+    private int infectionRateIndex = 0;
+    private final int[] infectionRateArray = {2, 2, 2, 3, 3, 4, 4};
     private int[] cures = {0,0,0,0};
-    private Deck infection;
+    private Deck infectionDeck;
     private Deck playerDeck;
-    //private WorldMap gameMap;
+    private WorldMap gameMap;
+
+    private int[] petriDish;
 
 
     public Board(){
@@ -26,7 +28,8 @@ public class Board {
         for (String city:citylist){
             System.out.println(city);
         }
-
+        int numCubes = citylist.size()/2;
+        petriDish = new int[]{numCubes, numCubes, numCubes, numCubes};
     }
 
     private void populateCityList() {
@@ -66,13 +69,9 @@ public class Board {
         return adj;
     }
 
-    public ArrayList<String> getCityList(){
-        return this.citylist;
-    }
+    public ArrayList<String> getCityList(){ return this.citylist; }
 
-    public int getDifficulty(){
-        return this.difficulty;
-    }
+    public int getDifficulty(){ return this.difficulty; }
 
     public Colour colourAssign(int index){
         Colour cityColour = null;
@@ -94,6 +93,23 @@ public class Board {
                 break;
         }
         return cityColour;
+    }
+
+    public void infectionRateUp(){
+        if(this.infectionRateIndex < this.infectionRateArray.length){
+            this.infectionRateIndex++;
+        }
+    }
+
+    public void infectCities(){
+        String cityToInfect;
+        for(int i = 0; i<this.infectionRateArray[infectionRateIndex]; i++){
+            cityToInfect = this.infectionDeck.drawCard();
+            this.numEpidemic += this.gameMap.infectCity(citylist.indexOf(cityToInfect)); //TODO: review combining these lines. clearer while seperate?
+            if(this.numEpidemic > this.epidemicsToLose){
+                //TODO: trigger loss here
+            }
+        }
     }
 
     public static void main(String[] args){
