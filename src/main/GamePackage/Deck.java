@@ -3,13 +3,14 @@ package GamePackage;
 import java.util.ArrayList;
 import java.util.Collections;
 
+//TODO: split into child classes. infection and player. better practice.
 public class Deck {
     private ArrayList<Card> deck = new ArrayList<>(); //bottom of deck is 0, end of arraylist is top of deck! //TODO: review this?
     private ArrayList<Card> discard = new ArrayList<>(); //bottom of discard is 0, end of arraylist is top of discard! //TODO: review this?
     private ArrayList<String> cityList; //String list of city names //TODO:refactor into game object. remove here?
     private final CardType deckType;
 
-    public Deck(Board game, CardType type){
+    public Deck(Board game, CardType type){ //TODO: add difficulty to passed variables?
         this.cityList = game.getCityList();
         this.deckType = type;
 
@@ -17,10 +18,6 @@ public class Deck {
             Card cityCard = new Card(city, type, game.colourAssign(cityList.indexOf(city)));
             deck.add(cityCard);
         }
-        /*for(int i=0; i<cityList.size(); i++){
-            Card cityCard = new Card(cityList[i], type, game.colourAssign(i));
-            deck.add(cityCard);
-        }*/
         if(type==CardType.PLAYERCARD){
             //deck.addAll(); //TODO: Add event cards here. event card list built elsewhere?
             for(int i=0; i<game.getDifficulty(); i++){
@@ -39,6 +36,7 @@ public class Deck {
         if(this.deckType==CardType.INFECTIONCARD){
             Card tripleInfect = this.deck.get(0);
             //TODO: implement the abilty to show what card was drawn?
+            //TODO: call infect 3 times on tripleInfect city
             this.discard.add(tripleInfect);
             Collections.shuffle(discard);
             intensify();

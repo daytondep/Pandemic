@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 public class City {
     private final String cityName;
-    private final Colour cityColour;
-    private ArrayList<City> nextTo = new ArrayList<>();
-    private boolean canInfect = true;
+    private final Colour cityColour; //inherent disease
+    private ArrayList<City> nextTo = new ArrayList<>(); //Links to every city that is touching this city.
+    private boolean canInfect = true; //can be blocked by quarantine specialist
+    //TODO: review. change to array?
     private int blue = 0;
     private int red = 0;
     private int yellow = 0;
@@ -34,33 +35,33 @@ public class City {
     public void allowInfect(){ this.canInfect=true; } //Caused by Quarantine Specialist leaving
 
     public int infectCity(Colour disease){
-        int epidemicCount = 0; //how many epidemics were recursively caused here.
+        int outbreakCount = 0; //how many epidemics were recursively caused here.
         if (this.canInfect){
             switch(disease){
                 case BLUE:
                     if(this.blue==3){
-                        epidemicCount+=outBreak(disease); //TODO: fix passing problem
+                        outbreakCount+=outBreak(disease); //TODO: fix passing problem
                     }else{
                         this.blue++;
                     }
                     break;
                 case RED:
                     if(this.red==3){
-                        epidemicCount+=outBreak(disease); //TODO: fix passing problem
+                        outbreakCount+=outBreak(disease); //TODO: fix passing problem
                     }else{
                         this.red++;
                     }
                     break;
                 case YELLOW:
                     if(this.yellow==3){
-                        epidemicCount+=outBreak(disease); //TODO: fix passing problem
+                        outbreakCount+=outBreak(disease); //TODO: fix passing problem
                     }else{
                         this.yellow++;
                     }
                     break;
                 case BLACK:
                     if(this.black==3){
-                        epidemicCount+=outBreak(disease); //TODO: fix passing problem
+                        outbreakCount+=outBreak(disease); //TODO: fix passing problem
                     }else{
                         this.black++;
                     }
@@ -70,15 +71,15 @@ public class City {
                     break;
             }
         }
-        return epidemicCount;
+        return outbreakCount;
     }
 
     private int outBreak(Colour disease){
-        int epidemicCount = 0;
+        int outbreakCount = 0;
         for(City city:nextTo){
-            epidemicCount+=city.infectCity(disease);
+            outbreakCount+=city.infectCity(disease);
         }
-        return epidemicCount+1;
+        return outbreakCount+1;
     }
 
     public void treatDisease(Colour treat, boolean isCured){
@@ -87,6 +88,7 @@ public class City {
         }else{
             regTreat(treat);
         }
+        //TODO: check if any colour is below 0;
     }
 
     private void curedTreat(Colour treat){

@@ -1,5 +1,6 @@
 package GamePackage;
 
+//TODO: split into child classes. infection and player. better practice.
 public class Card {
     private final String cityName;
     private final Colour cityColour;
