@@ -10,7 +10,7 @@ public class Deck {
     private ArrayList<String> cityList; //String list of city names //TODO:refactor into game object. remove here?
     private final CardType deckType;
 
-    public Deck(Board game, CardType type){ //TODO: add difficulty to passed variables?
+    public Deck(Board game, CardType type, int difficulty){ //TODO: add difficulty to passed variables?
         this.cityList = game.getCityList();
         this.deckType = type;
 
@@ -20,7 +20,7 @@ public class Deck {
         }
         if(type==CardType.PLAYERCARD){
             //deck.addAll(); //TODO: Add event cards here. event card list built elsewhere?
-            for(int i=0; i<game.getDifficulty(); i++){
+            for(int i=0; i<difficulty; i++){
                 deck.add(new Card("Epidemic", CardType.PLAYERCARD, Colour.GREEN));
             }
         }
