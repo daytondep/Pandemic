@@ -6,3 +6,4 @@ src/main/Deck.class
 src/main/StandardMap.txt~HEAD
 src/main/GamePackage/Board.class
 src/main/GamePackage/Deck.class
+*.class
