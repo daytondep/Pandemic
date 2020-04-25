@@ -73,7 +73,8 @@ public class Board {
         //gets name of drawn card. uses name to get index from cityList. uses index to infect city in map.
         String cityToInfect;
         for(int i = 0; i<this.infectionRateArray[infectionRateIndex]; i++){
-            cityToInfect = this.infectionDeck.drawCard();
+            Card drawn = this.infectionDeck.drawCard();
+            cityToInfect = drawn.getName();
             this.numOutbreak += this.gameMap.infectCity(citylist.indexOf(cityToInfect)); //TODO: review combining these lines. clearer while seperate?
             if(this.numOutbreak > this.outbreaksToLose){ //TODO: review moving this check to game?
                 //TODO: trigger loss here
