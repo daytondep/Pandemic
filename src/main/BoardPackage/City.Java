@@ -1,4 +1,6 @@
-package GamePackage;
+package BoardPackage;
+
+import GamePackage.Colour;
 
 import java.util.ArrayList;
 

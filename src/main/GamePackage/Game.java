@@ -1,10 +1,12 @@
 package GamePackage;
 
+import BoardPackage.Board;
+import BoardPackage.WorldMap;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Game {
     private int difficulty; //how many epidemic cards in player deck
@@ -27,7 +29,7 @@ public class Game {
         populateCityList();
         this.adjMap = makeAdj();
 
-        this.board = new Board(adjMap,cityList,infectionDeck,playerDeck);
+        this.board = new Board(adjMap,cityList);
         this.gameMap = new WorldMap(board,adjMap);
     }
 
