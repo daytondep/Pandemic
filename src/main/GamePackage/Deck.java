@@ -31,17 +31,7 @@ public class Deck {
         return this.deckType;
     }
 
-    //TODO: this method should be in board or map. bad scoping connor!
-    public void epidemicTrigger() {
-        if(this.deckType==CardType.INFECTIONCARD){
-            Card tripleInfect = this.deck.get(0);
-            //TODO: implement the abilty to show what card was drawn?
-            //TODO: call infect 3 times on tripleInfect city
-            this.discard.add(tripleInfect);
-            Collections.shuffle(discard);
-            intensify();
-        }
-    }
+
 
     private void intensify(){
         this.deck.addAll(this.discard);

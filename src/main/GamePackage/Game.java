@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Game {
     private int difficulty; //how many epidemic cards in player deck
@@ -96,4 +97,17 @@ public class Game {
             //since this is an element of this method, may be beneficial to leave it in board.
         }
     }
+
+    /*
+    //TODO: this method should be in board or map. bad scoping connor!
+    public void epidemicTrigger() {
+        if(this.deckType==CardType.INFECTIONCARD){
+            Card tripleInfect = this.deck.get(0);
+            //TODO: implement the abilty to show what card was drawn?
+            //TODO: call infect 3 times on tripleInfect city
+            this.discard.add(tripleInfect);
+            Collections.shuffle(discard);
+            intensify();
+        }
+    }*/
 }
