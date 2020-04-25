@@ -8,20 +8,11 @@ public class InfectionDeck extends Deck {
         super(game, type);
     }
 
-    private void intensify(){
-        Collections.shuffle(this.getDiscard());
-        this.getDeck().addAll(this.getDiscard());
-    }
-
-    public Card getCard(String city){
-        for(Card c: this.getDiscard()){
-            if(c.getName().equals(city)){
-                this.getDiscard().remove(c);
-                return c;
-            }
+    public void intensify(){
+        if(!this.getDiscard().isEmpty()) {
+            Collections.shuffle(this.getDiscard());
+            this.getDeck().addAll(this.getDiscard());
         }
-        return new Card("Bad Card", CardType.INFECTIONCARD, Colour.GREEN);
-        //TODO: exception handling. no card found.
     }
 
     public Card drawLast(){

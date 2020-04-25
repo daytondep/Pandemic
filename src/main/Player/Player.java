@@ -18,9 +18,9 @@ abstract class Player {
     private ArrayList<Card> heldCards;
 
     public Player(){
-        this.location = "Atlanta";
+        this.location = "Atlanta"; //TODO: change to be cityList[0]
         //held cards will be updated from Game, and held in the player object
-        this.heldCards = new ArrayList<Card>();
+        this.heldCards = new ArrayList<>();
     }
 
     public abstract void Drive();
@@ -67,7 +67,7 @@ abstract class Player {
             discarded = chooseDiscard(); //**
             //if the user decides to keep their original deck, nothing happens
             if(discarded == null) {
-                return;
+                return; //TODO: compiler is yelling that this is redundant. just this way for readability?
             }else{ //if the user chooses a card to discard from their held deck, discard it and add new
                 discardFromHand(discarded);
                 heldCards.add(card);

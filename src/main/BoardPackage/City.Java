@@ -29,6 +29,8 @@ public class City {
         return this.cityColour;
     }
 
+    public int[] getDiseaseCounts(){ return this.diseaseCounts; }
+
     public void blockInfect(){ this.canInfect=false; } //Caused by Quarantine Specialist and Resilient Population
 
     public void allowInfect(){ this.canInfect=true; } //Caused by Quarantine Specialist leaving

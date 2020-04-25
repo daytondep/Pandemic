@@ -39,4 +39,15 @@ public class WorldMap {
         return cityMap[index].infectCity(cityMap[index].getColour());
     }
 
+    public int[] cubeSurvey() {
+        int[] survey = new int[4]; //TODO: change to variable numDiseases
+        int[] temp;
+        for(City c: cityMap){
+            temp = c.getDiseaseCounts();
+            for(int i=0; i<temp.length; i++){
+                survey[i] += temp[i];
+            }
+        }
+        return survey;
+    }
 }

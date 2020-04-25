@@ -10,13 +10,13 @@ public class Board {
     private ArrayList<String> citylist;
     private int[][]adjMap;
 
-
-    private boolean gamelost;
+    private boolean gamelost = false;
     private int numOutbreak = 0; //how many outbreaks we've had. 8 is a loss condition
     private int outbreaksToLose = 8;
 
     private WorldMap gameMap;
 
+    private int numCubes;
     private int[] petriDish; //TODO: stay in board. change representaion?
 
 
@@ -24,16 +24,18 @@ public class Board {
         this.citylist = citylist;
         this.adjMap = adj;
 
-        int numCubes = citylist.size()/2;
+        this.numCubes = citylist.size()/2;
         petriDish = new int[]{numCubes, numCubes, numCubes, numCubes};
     }
 
 
-    public ArrayList<String> getCityList(){ return this.citylist; } //TODO: delete. redundant.
+    public ArrayList<String> getCityList(){ return this.citylist; } //TODO: delete? redundant.
 
     public int getNumOutbreak(){ return this.numOutbreak; }
 
     public int getOutbreaksToLose(){ return this.outbreaksToLose; }
+
+    public boolean getGameLost(){ return this.gamelost; }
 
     //TODO: move to WorldMap and copy to game? or leave here?
     public Colour colourAssign(int index){
@@ -58,24 +60,44 @@ public class Board {
         }
         return cityColour;
     }
-//
-//    //TODO: review. move to game?
-//    /*
-//    Still want to go over and see whether this is better in game or board (in both atm)
-//     */
-//    public void infectCities(){
-//        //gets name of drawn card. uses name to get index from cityList. uses index to infect city in map.
-//        String cityToInfect;
-//        for(int i = 0; i<this.infectionRateArray[infectionRateIndex]; i++){
-//            Card drawn = this.infectionDeck.drawCard();
-//            cityToInfect = drawn.getName();
-//            this.numOutbreak += this.gameMap.infectCity(citylist.indexOf(cityToInfect)); //TODO: review combining these lines. clearer while seperate?
-//            if(this.numOutbreak > this.outbreaksToLose){ //TODO: review moving this check to game?
-//                //TODO: trigger loss here
-//                gamelost = true;
-//            }
-//            //TODO: check if petri dishes are negative. loss condition.
-//        }
-//    }
 
+    private int colourToIndex(Colour colour){
+        //Takes in a disease colour and returns an index
+        switch (colour){
+            case BLUE:
+                return 0;
+            case RED:
+                return 1;
+            case YELLOW:
+                return 2;
+            case BLACK:
+                return 3;
+            default:
+                return -1;
+            //TODO: error handling
+        }
+    }
+
+    public void infectCity(String cityToInfect) {
+        //infects city and updates petridish counts.
+        this.numOutbreak += this.gameMap.infectCity(citylist.indexOf(cityToInfect));
+        int[] survey = this.gameMap.cubeSurvey();
+        for(int i=0; i<this.petriDish.length; i++) {
+            this.petriDish[i] = numCubes-survey[i];
+        }
+        this.gamelost = checkLoss();
+    }
+
+    public boolean checkLoss(){
+        //checks the two ways board can know if the game has been lost.
+        if(this.getNumOutbreak() > this.getOutbreaksToLose()){
+            return true;
+        }
+        for(int i: petriDish) {
+            if (this.petriDish[i]<0){
+                return true;
+            }
+        }
+        return false;
+    }
 }

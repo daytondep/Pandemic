@@ -10,4 +10,8 @@ public class PlayerDeck extends Deck {
             }
         }
     }
+
+    public int cardsRemaining(){
+        return this.getDeck().size();
+    }
 }

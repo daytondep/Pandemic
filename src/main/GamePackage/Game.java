@@ -13,15 +13,15 @@ public class Game {
     private boolean gameLost;
     private boolean gameWon;
     private boolean[] cures = {false,false,false,false}; //Blue, Red, Yellow, Black
-    private int infectionRateIndex = 0; //TODO: move to game.
-    private final int[] infectionRateArray = {2, 2, 2, 3, 3, 4, 4}; //how many infection cards flip each turn TODO: move to game.
+    private int infectionRateIndex = 0;
+    private final int[] infectionRateArray = {2, 2, 2, 3, 3, 4, 4}; //how many infection cards flip each turn
     private int numOutbreak;
     private WorldMap gameMap;
     private ArrayList<String> cityList = new ArrayList<>();
     private int[][] adjMap;
 
-    private Deck infectionDeck; //TODO: move to game. *Will be of type "infectionDeck"*
-    private Deck playerDeck; //TODO: move to game. *Will be of type "playerDeck"*
+    private InfectionDeck infectionDeck; // *Will be of type "infectionDeck"*
+    private PlayerDeck playerDeck; // *Will be of type "playerDeck"*
 
     public Board board;
 
@@ -37,10 +37,9 @@ public class Game {
 
     public int getDifficulty(){ return this.difficulty; }
 
-    //TODO: move to game.
     private void populateCityList() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader("cityindex.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("cityindex.txt")); //TODO: pass filename.
 
             String line = br.readLine();
             while (line != null) {
@@ -53,13 +52,12 @@ public class Game {
         }
     }
 
-    //TODO: move to Game. (FROM BOARD)
     private int[][] makeAdj(){
         int[][] adj = new int[48][48];
         try {
-            BufferedReader br = new BufferedReader(new FileReader("StandardMap.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("StandardMap.txt")); //TODO: pass filename.
             int city = 0;
-            String[] broken_line = null; //TODO: apparently redundant?
+            String[] broken_line;
             String line = br.readLine();
             while (line != null) {
                 broken_line = line.split(" ");
@@ -107,33 +105,25 @@ public class Game {
         }
     }
 
-    //TODO: review. move to game? (FROM BOARD)
     public void infectCities(){
         //gets name of drawn card. uses name to get index from cityList. uses index to infect city in map.
         String cityToInfect;
         for(int i = 0; i<this.infectionRateArray[infectionRateIndex]; i++){
             Card drawn = this.infectionDeck.drawCard();
             cityToInfect = drawn.getName();
-            this.numOutbreak += (board.getNumOutbreak() +this.gameMap.infectCity(cityList.indexOf(cityToInfect))); //TODO: review combining these lines. clearer while seperate?
-            if(board.getNumOutbreak() > board.getOutbreaksToLose()){ //TODO: review moving this check to game?
-                //TODO: trigger loss here
-                gameLost = true;
+            this.board.infectCity(cityToInfect);
+            if(board.getGameLost()){
+                //TODO: we lost. what now?
             }
-            //TODO: check if petri dishes are negative. loss condition.
-            //since this is an element of this method, may be beneficial to leave it in board.
         }
     }
 
-    /*
-    //TODO: this method should be in board or map. bad scoping connor!
-    public void epidemicTrigger() {
-        if(this.deckType==CardType.INFECTIONCARD){
-            Card tripleInfect = this.deck.get(0);
-            //TODO: implement the abilty to show what card was drawn?
-            //TODO: call infect 3 times on tripleInfect city
-            this.discard.add(tripleInfect);
-            Collections.shuffle(discard);
-            intensify();
-        }
-    }*/
+    public void triggerEpidemic() {
+        Card tripleInfect = this.infectionDeck.drawLast();
+        this.board.infectCity(tripleInfect.getName());
+        this.board.infectCity(tripleInfect.getName());
+        this.board.infectCity(tripleInfect.getName());
+        this.infectionDeck.discardCard(tripleInfect);
+        this.infectionDeck.intensify();
+    }
 }

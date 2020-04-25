@@ -42,4 +42,17 @@ public abstract class Deck {
         }
     }
 
+    public void discardCard(Card discarded){ this.discard.add(discarded); }
+
+    public Card getDiscardedCard(String cardName){
+        for(Card c: this.getDiscard()){
+            if(c.getName().equals(cardName)){
+                this.getDiscard().remove(c);
+                return c;
+            }
+        }
+        return new Card("Bad Card", this.deckType, Colour.GOLD);
+        //TODO: exception handling. no card found.
+    }
+
 }
