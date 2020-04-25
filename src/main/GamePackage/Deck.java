@@ -4,25 +4,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 //TODO: split into child classes. infection and player. better practice.
-public class Deck {
+public abstract class Deck {
+    private Game game;
     private ArrayList<Card> deck = new ArrayList<>(); //bottom of deck is 0, end of arraylist is top of deck! //TODO: review this?
     private ArrayList<Card> discard = new ArrayList<>(); //bottom of discard is 0, end of arraylist is top of discard! //TODO: review this?
     private ArrayList<String> cityList; //String list of city names //TODO:refactor into game object. remove here?
     private final CardType deckType;
 
-    public Deck(Board game, CardType type, int difficulty){ //TODO: add difficulty to passed variables?
+    public Deck(Game game, CardType type){
+        this.game = game;
         this.cityList = game.getCityList();
         this.deckType = type;
 
         for(String city: cityList){
             Card cityCard = new Card(city, type, game.colourAssign(cityList.indexOf(city)));
             deck.add(cityCard);
-        }
-        if(type==CardType.PLAYERCARD){
-            //deck.addAll(); //TODO: Add event cards here. event card list built elsewhere?
-            for(int i=0; i<difficulty; i++){
-                deck.add(new Card("Epidemic", CardType.PLAYERCARD, Colour.GREEN));
-            }
         }
         Collections.shuffle(deck);
     }
@@ -32,15 +28,18 @@ public class Deck {
     }
 
 
+    protected ArrayList<Card> getDeck(){ return this.deck; }
 
-    private void intensify(){
-        this.deck.addAll(this.discard);
+
+    protected ArrayList<Card> getDiscard(){ return this.discard; }
+
+    public Card drawCard(){
+        if(!this.deck.isEmpty()) {
+            return deck.remove(deck.size() - 1);
+        }else{
+            return null;
+            //TODO: exception handling
+        }
     }
 
-    public String drawCard(){
-        Card drawnCard = deck.get(deck.size()-1); // TODO: better way to get last indexed card?
-        String drawnCityName = drawnCard.getName();
-        this.discard.add(drawnCard);
-        return drawnCityName;
-    }
 }

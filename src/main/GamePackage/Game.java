@@ -15,7 +15,7 @@ public class Game {
     private final int[] infectionRateArray = {2, 2, 2, 3, 3, 4, 4}; //how many infection cards flip each turn TODO: move to game.
     private int numOutbreak;
     private WorldMap gameMap;
-    private ArrayList<String> citylist = new ArrayList<>();
+    private ArrayList<String> cityList = new ArrayList<>();
     private int[][] adjMap;
 
     private Deck infectionDeck; //TODO: move to game. *Will be of type "infectionDeck"*
@@ -27,11 +27,11 @@ public class Game {
         populateCityList();
         this.adjMap = makeAdj();
 
-        this.board = new Board(adjMap,citylist,infectionDeck,playerDeck);
+        this.board = new Board(adjMap,cityList,infectionDeck,playerDeck);
         this.gameMap = new WorldMap(board,adjMap);
     }
 
-
+    public ArrayList<String> getCityList(){ return this.cityList; }
 
     public int getDifficulty(){ return this.difficulty; }
 
@@ -42,7 +42,7 @@ public class Game {
 
             String line = br.readLine();
             while (line != null) {
-                citylist.add(line);
+                cityList.add(line);
                 line = br.readLine();
             }
             br.close();
@@ -74,6 +74,29 @@ public class Game {
         return adj;
     }
 
+    public Colour colourAssign(int index){
+        //assigns a colour enum. based on the design decision to have the order of cities based on blue, red, yellow, black.
+        Colour cityColour = null;
+        switch (index%(cityList.size()/4)) {
+            case 1:
+                cityColour = Colour.BLUE;
+                break;
+            case 2:
+                cityColour = Colour.RED;
+                break;
+            case 3:
+                cityColour = Colour.YELLOW;
+                break;
+            case 4:
+                cityColour = Colour.BLACK;
+                break;
+            default:
+                //TODO: exception handling
+                break;
+        }
+        return cityColour;
+    }
+
     //FROM BOARD
     public void infectionRateUp(){
         //Step 1 of 3 in an epidemic
@@ -87,8 +110,9 @@ public class Game {
         //gets name of drawn card. uses name to get index from cityList. uses index to infect city in map.
         String cityToInfect;
         for(int i = 0; i<this.infectionRateArray[infectionRateIndex]; i++){
-            cityToInfect = this.infectionDeck.drawCard();
-            this.numOutbreak += (board.getNumOutbreak() +this.gameMap.infectCity(citylist.indexOf(cityToInfect))); //TODO: review combining these lines. clearer while seperate?
+            Card drawn = this.infectionDeck.drawCard();
+            cityToInfect = drawn.getName();
+            this.numOutbreak += (board.getNumOutbreak() +this.gameMap.infectCity(cityList.indexOf(cityToInfect))); //TODO: review combining these lines. clearer while seperate?
             if(board.getNumOutbreak() > board.getOutbreaksToLose()){ //TODO: review moving this check to game?
                 //TODO: trigger loss here
                 gameLost = true;
