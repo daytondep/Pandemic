@@ -12,8 +12,8 @@ Kinds of actions:
     -Share knowledge
  */
 
-abstract class Player {
-    private int actions; //Number of actions the player has
+public abstract class Player {
+    private int actionCount; //Number of actions the player has
     private String location;
     private ArrayList<Card> heldCards;
 

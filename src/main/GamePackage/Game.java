@@ -2,6 +2,7 @@ package GamePackage;
 
 import BoardPackage.Board;
 import BoardPackage.WorldMap;
+import Player.Player;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -23,6 +24,7 @@ public class Game {
     private InfectionDeck infectionDeck; // *Will be of type "infectionDeck"*
     private PlayerDeck playerDeck; // *Will be of type "playerDeck"*
 
+    private ArrayList<Player> playerList; //List of players in each game, can iterate through the list every turn to have players execute moves
     public Board board;
 
     public Game(){
@@ -33,6 +35,51 @@ public class Game {
         this.gameMap = new WorldMap(board,adjMap);
     }
 
+    /*
+    Might be easiest to, when a user's turn comes up, populate a list of off possible moves for the player, and have the player choose from them
+     */
+    private void chooseMove(){ //TODO: determine parameters
+        //generate move list TODO: how will we show a move/how will it be executed
+
+        //wrap a players move(function) with a front-end clickable event
+
+        /*Pseudo code:
+        if(action == endmove){
+            break
+        }
+
+        if(Player.actioncount > 0 && Player.actioncount - costOfAction>0){
+            execute move
+        }else{
+            print("Cannot perform action, choose another or end your turn")
+        }
+         */
+
+        //from user input (choosing a move from the list)
+
+    }
+
+    /*
+    Method to conduct a round of the game
+    Go through each player in playerList, for each player, until their actionCount is at 0 or they voluntarily
+     */
+    public void conductRound(){
+        /*
+        for (Player p: playerList){
+            while (actionCount > 0){ //not sure if this should be dealt with here or in chooseMove()
+                chooseMove(Player p);
+            }
+         }
+
+         TODO: how to save state. will we update as things happen, or will it be in a method (resolveRound())
+         */
+    }
+
+    /*
+    public void resolveRound(){
+
+    }
+    */
     public ArrayList<String> getCityList(){ return this.cityList; }
 
     public int getDifficulty(){ return this.difficulty; }
