@@ -1,6 +1,10 @@
 package Player;
 
+import GamePackage.Card;
+
 public class ContingencyPlanner extends Player {
+
+    private Card bonusEvent;
 
     public ContingencyPlanner(){
         super();
@@ -43,5 +47,9 @@ public class ContingencyPlanner extends Player {
     @Override
     public void buildResearchStation() {
 
+    }
+
+    public void recoverEvent(String cardName){
+        this.bonusEvent = this.getThisGame().getPlayerDeck().getDiscardedCard(cardName);
     }
 }

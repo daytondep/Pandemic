@@ -173,4 +173,8 @@ public class Game {
         this.infectionDeck.discardCard(tripleInfect);
         this.infectionDeck.intensify();
     }
+
+    public PlayerDeck getPlayerDeck() {
+        return playerDeck;
+    }
 }

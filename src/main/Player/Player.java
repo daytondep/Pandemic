@@ -1,5 +1,6 @@
 package Player;
 import GamePackage.Card;
+import GamePackage.Game;
 
 import java.util.ArrayList;
 /*
@@ -13,14 +14,22 @@ Kinds of actions:
  */
 
 public abstract class Player {
+
+    private Game thisGame;
+
     private int actionCount; //Number of actions the player has
     private String location;
     private ArrayList<Card> heldCards;
 
     public Player(){
         this.location = "Atlanta"; //TODO: change to be cityList[0]
+        //this.thisGame = game; //TODO: change to a setter method?
         //held cards will be updated from Game, and held in the player object
         this.heldCards = new ArrayList<>();
+    }
+
+    public Game getThisGame() {
+        return thisGame;
     }
 
     public abstract void Drive();
@@ -50,7 +59,7 @@ public abstract class Player {
     //Remove card from player's held card pile
     private void discardFromHand(Card card){
         heldCards.remove(card);
-    }
+    } //TODO: review changing to string?
 
     /*
     This method will be used to allow a player to go through their deck of cards, and choose a card to discard
