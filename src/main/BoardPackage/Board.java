@@ -17,12 +17,14 @@ public class Board {
     private WorldMap gameMap;
 
     private int numCubes;
-    private int[] petriDish; //TODO: stay in board. change representaion?
+    private int[] petriDish;
 
 
     public Board(int[][] adj, ArrayList<String> citylist){
         this.citylist = citylist;
         this.adjMap = adj;
+        this.gameMap = new WorldMap(this,adjMap);
+
 
         this.numCubes = citylist.size()/2;
         petriDish = new int[]{numCubes, numCubes, numCubes, numCubes};

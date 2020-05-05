@@ -17,7 +17,7 @@ public class Game {
     private int infectionRateIndex = 0;
     private final int[] infectionRateArray = {2, 2, 2, 3, 3, 4, 4}; //how many infection cards flip each turn
     private int numOutbreak;
-    private WorldMap gameMap;
+    //private WorldMap gameMap;
     private ArrayList<String> cityList = new ArrayList<>();
     private int[][] adjMap;
 
@@ -32,9 +32,10 @@ public class Game {
         this.adjMap = makeAdj();
 
         this.board = new Board(adjMap,cityList);
-        this.gameMap = new WorldMap(board,adjMap);
+        //this.gameMap = new WorldMap(board,adjMap); //TODO: move to board.
     }
 
+    //TODO: layer between player and deck for discarding playercards. brains of actions.
     /*
     Might be easiest to, when a user's turn comes up, populate a list of off possible moves for the player, and have the player choose from them
      */
