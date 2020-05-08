@@ -1,7 +1,6 @@
 package GamePackage;
 
 import BoardPackage.Board;
-import BoardPackage.WorldMap;
 import Player.Player;
 
 import java.io.BufferedReader;
@@ -87,7 +86,7 @@ public class Game {
 
     private void populateCityList() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader("cityindex.txt")); //TODO: pass filename.
+            BufferedReader br = new BufferedReader(new FileReader("StandardMap-cityindex.txt")); //TODO: pass filename.
 
             String line = br.readLine();
             while (line != null) {
@@ -103,7 +102,7 @@ public class Game {
     private int[][] makeAdj(){
         int[][] adj = new int[48][48];
         try {
-            BufferedReader br = new BufferedReader(new FileReader("StandardMap.txt")); //TODO: pass filename.
+            BufferedReader br = new BufferedReader(new FileReader("StandardMap-AdjMap.txt")); //TODO: pass filename.
             int city = 0;
             String[] broken_line;
             String line = br.readLine();
